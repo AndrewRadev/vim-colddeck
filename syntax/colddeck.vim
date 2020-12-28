@@ -29,7 +29,16 @@ exe 'syn match  cdeckResSep   /\V'.get(g:, 'cdeck_rchar', '>').'/ contained'
 
 " Highlights
 
-hi cdeckInvisible guifg=bg guibg=bg ctermbg=bg ctermfg=bg
+try
+  hi cdeckInvisible guifg=bg guibg=bg ctermbg=bg ctermfg=bg
+catch /E420:/
+  " No "bg" set, let's try our best to hide it:
+  if &background == 'dark'
+    hi cdeckInvisible guifg=Black guibg=Black ctermbg=Black ctermfg=Black
+  elseif &background == 'light'
+    hi cdeckInvisible guifg=White guibg=White ctermbg=White ctermfg=White
+  endif
+endtry
 
 hi link    cdeckCommand   Normal
 hi link    cdeckCmdRef    Identifier
